@@ -1,0 +1,16 @@
+asgiref==3.12.1
+bleach==6.4.0
+Django==5.2
+django-jazzmin==3.0.5
+django-stubs==6.1.0
+django-stubs-ext==6.1.0
+django-summernote==0.8.20.0
+django-taggit==6.1.0
+pillow==12.3.0
+python-git==2018.2.1
+Send2Trash==2.1.0
+sqlparse==0.6.0
+types-PyYAML==6.0.12.20260815
+typing_extensions==4.16.0
+tzdata==2026.3
+webencodings==0.6.1
