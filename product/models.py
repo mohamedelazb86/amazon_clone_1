@@ -8,6 +8,7 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 FLAG_TYPE=[
     ('New','New'),
     ('Sale','Sale'),
@@ -32,6 +33,26 @@ class Product(models.Model):
     def save(self,*args,**kwargs):
         self.slug=slugify(self.name)
         super().save(*args,**kwargs)
+
+    @property
+    def all_review(self):
+        reviews=self.review_product.all().count()
+        return reviews
+    
+    @property
+    def avg_review(self):
+        reviews=self.review_product.all()
+        total=0
+
+        if len(reviews) > 0:
+            for item in reviews:
+                total += item.rate
+            avg= total / len(reviews)
+        else :
+            avg = 0
+
+        return avg
+
 
     def __str__(self):
         return self.name
