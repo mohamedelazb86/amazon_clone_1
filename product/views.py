@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator
 
 from .models import Product,ProductImage,Review
@@ -21,15 +21,28 @@ def product_list(request):
 
 @login_required
 def product_detail(request,slug):
-    product=Product.objects.get(slug=slug)
-    images=ProductImage.objects.filter(product=product)
-    reviews=Review.objects.filter(product=product)
+    # product=Product.objects.get(slug=slug)
+    product=get_object_or_404(Product,slug=slug)
+    # images=ProductImage.objects.filter(product=product)
+    images=product.images_product.all()
+    # reviews=Review.objects.filter(product=product)
+    reviews=product.review_product.all()
     related=Product.objects.filter(brand=product.brand)[:10]
+
+    # المنتج السابق
+   
+
+    product_previous= Product.objects.filter(id__lt=product.id).order_by('-id').first()
+
+    product_next=Product.objects.filter(id__gt=product.id).order_by('id').first()
 
     context={
         'product':product,
         'images':images,
         'reviews':reviews,
-        'related':related
+        'related':related,
+        'product_previous':product_previous,
+        'product_next':product_next,
+
     }
     return render(request,'product/product_detail.html',context)

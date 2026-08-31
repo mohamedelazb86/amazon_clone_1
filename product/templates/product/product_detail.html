@@ -59,10 +59,17 @@
                                 <a href="#">
                                     <i class="icofont-arrow-left"></i>
                                     prev product
-                                    <span class="product-nav-popup">
-                                        <img src="images/product/02.jpg" alt="product">
-                                        <small>green chilis</small>
+                                    
+                                    {% if product_previous %}
+                                        <span class="product-nav-popup">
+                                        <img src="{{product_previous.image.url}}" alt="product">
+                                        <small>{{product_previous.name}}</small>
                                     </span>
+                                    {% else %}
+                                   Sorry There No Any Product
+                                    {% endif %}
+                                        
+                                    
                                 </a>
                             </li>
                             <li class="product-nav-next">
@@ -70,8 +77,8 @@
                                     next product
                                     <i class="icofont-arrow-right"></i>
                                     <span class="product-nav-popup">
-                                        <img src="images/product/03.jpg" alt="product">
-                                        <small>green chilis</small>
+                                        <img src="{{product_next.image.url}}" alt="product">
+                                        <small>{{product_next.name}}</small>
                                     </span>
                                 </a>
                             </li>
