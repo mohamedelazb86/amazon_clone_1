@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 
-from .models import Product
+from .models import Product,ProductImage,Review
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -22,7 +22,14 @@ def product_list(request):
 @login_required
 def product_detail(request,slug):
     product=Product.objects.get(slug=slug)
+    images=ProductImage.objects.filter(product=product)
+    reviews=Review.objects.filter(product=product)
+    related=Product.objects.filter(brand=product.brand)[:10]
+
     context={
-        'product':product
+        'product':product,
+        'images':images,
+        'reviews':reviews,
+        'related':related
     }
     return render(request,'product/product_detail.html',context)
