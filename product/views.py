@@ -65,9 +65,16 @@ def brand_list(request):
 @login_required
 def brand_detail(request,slug):
     brand=Brand.objects.get(slug=slug)
+    # product_count=Product.objects.filter(brand=brand)
+    products=Product.objects.filter(brand=brand)
+    paginator = Paginator(products, 5)  # Show 20 contacts per page.
+        
+    page_number = request.GET.get("page")
+    products = paginator.get_page(page_number)
     context={
-        'brand':brand
+        'brand':brand,
+        'products':products
     }
-    return render(request,'product/brand_detail.html',{})
+    return render(request,'product/brand_detail.html',context)
 
 
