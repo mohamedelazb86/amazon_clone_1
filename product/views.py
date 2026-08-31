@@ -1,11 +1,18 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from .models import Product
 from django.contrib.auth.decorators import login_required
 
 @login_required
 def product_list(request):
-    products=Product.objects.all().order_by('-id')[:20]
+    products=Product.objects.all()
+    paginator = Paginator(products, 20)  # Show 25 contacts per page.
+
+    page_number = request.GET.get("page")
+    products = paginator.get_page(page_number)
+  
+
     context={
         'products':products
     }
